@@ -1,0 +1,21 @@
+import pickle
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Caminho do arquivo .pkl
+with open(r"C:\Users\Fernanda\Documents\TCC\Reconhecimento Facial\data\encodings\102_NAND.pkl", "rb") as f:
+    data = pickle.load(f)
+
+encoding = data["encoding"]
+
+# Verifica o tamanho do vetor
+print("Tamanho do vetor de encoding:", len(encoding))
+
+# Converte o vetor em formato 2D para visualização (ex: 16x8)
+encoding_img = np.reshape(encoding, (16, 8))
+
+# Exibe o mapa de calor
+plt.imshow(encoding_img, cmap='viridis')
+plt.colorbar(label="Intensidade")
+plt.title(f"Mapa de Calor do Encoding - {data['nome']}")
+plt.show()
