@@ -3,6 +3,7 @@ import cv2
 import os
 import pickle
 import time
+from config.settings import CAMERA_INDEX
 
 
 # Carrega todos os encodings salvos em uma pasta
@@ -21,7 +22,7 @@ def carregar_encodings(pasta):
 # Captura um rosto via webcam, gera encoding e salva em arquivo .pkl
 def salvar_encoding(id_usuario, nome_usuario, pasta_encodings):
 
-    cap = cv2.VideoCapture(0)  # Abre a câmera padrão (id=0)
+    cap = cv2.VideoCapture(CAMERA_INDEX)  # Abre a câmera padrão (id=0)
     if not cap.isOpened():
         print("Erro ao acessar a câmera.")
         return False

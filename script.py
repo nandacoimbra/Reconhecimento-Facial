@@ -3,6 +3,8 @@ import cv2
 import face_recognition
 import os
 import pickle
+from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX
+
 
 # Configura a porta serial
 ser = serial.Serial('COM7', 115200, timeout=1)
@@ -16,7 +18,7 @@ def capturar_e_salvar_encoding(id_usuario, nome_usuario, pasta_encodings='encodi
         os.makedirs(pasta_encodings)
 
     # Inicializa a câmera
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(CAMERA_INDEX)
     if not cap.isOpened():
         print("Erro ao acessar a câmera.")
         return

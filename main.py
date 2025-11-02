@@ -4,7 +4,7 @@ from src.camera import detectar_rosto_continuo
 from src.encoding import carregar_encodings, salvar_encoding, remover_encoding_por_id
 from src.recognition import comparar_com_base
 
-from config.settings import SERIAL_PORT, ENCODINGS_DIR
+from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX
 
 
 # Função principal que controla o fluxo do sistema de reconhecimento facial

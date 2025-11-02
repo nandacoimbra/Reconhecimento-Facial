@@ -2,6 +2,8 @@ import face_recognition
 import cv2
 import os
 import pickle
+from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX
+
 
 def carregar_encodings(pasta_encodings='encodings'):
     encodings_conhecidos = []
@@ -24,7 +26,7 @@ def carregar_encodings(pasta_encodings='encodings'):
 encodings_conhecidos, nomes_conhecidos, ids_conhecidos = carregar_encodings()
 
 # Inicia a webcam
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(CAMERA_INDEX)
 
 print("Iniciando reconhecimento facial... Pressione 'q' para sair.")
 

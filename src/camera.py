@@ -1,11 +1,12 @@
 import cv2
 import face_recognition
 import time
+from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX
 
 
 def detectar_rosto_continuo(duracao_minima=2.0, mostrar_camera=True):
     # Abre a câmera (0 = câmera padrão)
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(CAMERA_INDEX)
     inicio = None  # Marca o tempo inicial em que um rosto foi detectado
     frame_detectado = None  # Frame que será retornado se rosto for confirmado
 

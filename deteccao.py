@@ -4,6 +4,7 @@ import os
 import pickle
 import time
 import serial
+from config.settings import CAMERA_INDEX
 
 # # Inicializa comunicação serial
 # ser = serial.Serial('COM7', 115200, timeout=1)
@@ -29,7 +30,7 @@ def carregar_encodings(pasta_encodings=ENCODINGS_DIR):
 
 
 def detectar_rosto_continuo(duracao_minima=2.0):
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(CAMERA_INDEX)
     if not cap.isOpened():
         print("Erro ao acessar a câmera.")
         return None
