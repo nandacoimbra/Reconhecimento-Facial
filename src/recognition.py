@@ -1,5 +1,5 @@
-import cv2
-import face_recognition
+import cv2 # type: ignore
+import face_recognition # type: ignore
 
 
 # Função que compara um frame da câmera com a base de encodings já cadastrados

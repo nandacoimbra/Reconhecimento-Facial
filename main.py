@@ -5,7 +5,7 @@ from src.encoding import carregar_encodings, salvar_encoding, remover_encoding_p
 from src.recognition import comparar_com_base, desenha_retangulo_e_nome
 
 from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX, ACCESS_DIR
-import cv2
+import cv2 # type: ignore
 import os
 from datetime import datetime
 

@@ -1,5 +1,5 @@
-import face_recognition
-import cv2
+import face_recognition # type: ignore
+import cv2 # type: ignore
 import os
 import pickle
 import time

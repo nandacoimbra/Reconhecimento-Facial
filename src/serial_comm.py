@@ -1,4 +1,4 @@
-import serial
+import serial # type: ignore
 # Funções para comunicação serial com o ESP32
 def configurar_serial(porta):
     return serial.Serial(porta, 115200, timeout=1)

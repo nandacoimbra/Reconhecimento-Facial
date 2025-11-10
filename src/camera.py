@@ -1,5 +1,5 @@
-import cv2
-import face_recognition
+import cv2 # type: ignore
+import face_recognition # type: ignore
 import time
 from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX
 
