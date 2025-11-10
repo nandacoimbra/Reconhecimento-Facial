@@ -64,14 +64,13 @@ def fluxo_principal():
                 if nome != "Desconhecido":
                     enviar_mensagem(ser, f"face_detectada:{id_usuario}")
                     print(f"Face detectada: {nome} (ID: {id_usuario})...")
-                    # Salva recorte do rosto (se tiver localização), com timestamp
+                    # Salva recorte do rosto, com timestamp, para registro na pasta de acessos
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     safe_name = nome.replace(" ", "_")
                     filename = f"{id_usuario}_{safe_name}_{timestamp}.jpg"
                     caminho = os.path.join(ACCESS_DIR, filename)
                     if localizacao:
                         top, right, bottom, left = map(int, localizacao)
-                        # Protege índices fora do frame
                         top = max(0, top); left = max(0, left)
                         bottom = min(frame.shape[0], bottom); right = min(frame.shape[1], right)
                         desenha_retangulo_e_nome(frame, top, right, bottom, left, nome, id_usuario)
