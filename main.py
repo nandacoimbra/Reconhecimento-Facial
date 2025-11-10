@@ -1,12 +1,20 @@
-# Importações dos módulos que cuidam da comunicação serial, câmera, encodings faciais e reconhecimento
-from src.serial_comm import configurar_serial, ler_comando_serial, enviar_mensagem
-from src.camera import detectar_rosto_continuo
-from src.encoding import carregar_encodings, salvar_encoding, remover_encoding_por_id
-from src.recognition import comparar_com_base, desenha_retangulo_e_nome
+# Importações dos módulos
 
+#funções de comunicação serial
+from src.serial_comm import configurar_serial, ler_comando_serial, enviar_mensagem 
+#função para capturar rosto via webcam
+from src.camera import detectar_rosto_continuo 
+#funções para manipular encodings (carregar, salvar, remover)
+from src.encoding import carregar_encodings, salvar_encoding, remover_encoding_por_id 
+#funções de reconhecimento facial e desenho na imagem
+from src.recognition import comparar_com_base, desenha_retangulo_e_nome
+#configurações do sistema (portas, diretórios, índices)
 from config.settings import SERIAL_PORT, ENCODINGS_DIR, CAMERA_INDEX, ACCESS_DIR
+#opencv2 para manipulação de imagens
 import cv2 # type: ignore
+#os para manipulação de diretórios e arquivos
 import os
+#datetime para timestamp na gravação de imagens
 from datetime import datetime
 
 # Função principal que controla o fluxo do sistema de reconhecimento facial
@@ -50,37 +58,26 @@ def fluxo_principal():
             if frame is not None:
                 # Carrega todos os encodings salvos (rostos cadastrados)
                 encodings, nomes, ids = carregar_encodings(ENCODINGS_DIR)
-                
                 # Compara o rosto capturado com os encodings da base
                 nome, id_usuario, localizacao = comparar_com_base(frame, encodings, nomes, ids)
-                
                 # Se reconheceu, envia ID do usuário para o ESP32
                 if nome != "Desconhecido":
                     enviar_mensagem(ser, f"face_detectada:{id_usuario}")
                     print(f"Face detectada: {nome} (ID: {id_usuario})...")
-                    
                     # Salva recorte do rosto (se tiver localização), com timestamp
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     safe_name = nome.replace(" ", "_")
                     filename = f"{id_usuario}_{safe_name}_{timestamp}.jpg"
                     caminho = os.path.join(ACCESS_DIR, filename)
-                    
                     if localizacao:
                         top, right, bottom, left = map(int, localizacao)
                         # Protege índices fora do frame
                         top = max(0, top); left = max(0, left)
                         bottom = min(frame.shape[0], bottom); right = min(frame.shape[1], right)
                         desenha_retangulo_e_nome(frame, top, right, bottom, left, nome, id_usuario)
-
-                        #rosto_crop = frame[top:bottom, left:right]
-                        #if rosto_crop.size != 0:
-                            #cv2.imwrite(caminho, rosto_crop)
                         cv2.imwrite(caminho, frame)
                     else:
-                        # Se não tiver localização, salva o frame inteiro
-                        # import cv2 as _cv
                         cv2.imwrite(caminho, frame)
-                    
                     print(f"Frame salvo em: {caminho}")
                 else:
                     enviar_mensagem(ser, "face_nao_reconhecida")
