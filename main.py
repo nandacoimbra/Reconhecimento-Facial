@@ -30,7 +30,6 @@ def fluxo_principal():
     while True:
         # Lê o comando recebido via porta serial
         comando = ler_comando_serial(ser)
-
         # Caso o comando seja para tirar foto e cadastrar um novo usuário
         # Formato esperado: "tirar_foto|id_usuario|nome_usuario"
         if comando and comando.startswith("tirar_foto|"):

@@ -54,16 +54,13 @@ def salvar_encoding(id_usuario, nome_usuario, pasta_encodings):
                 if encodings:
                     # Usa o primeiro rosto encontrado
                     encoding = encodings[0]
-
                     # Monta dicionário com dados do usuário
                     dados = {"id": id_usuario, "nome": nome_usuario, "encoding": encoding}
-
                     # Salva em arquivo pickle
                     nome_arquivo = f"{id_usuario}_{nome_usuario}.pkl"
                     caminho_completo = os.path.join(pasta_encodings, nome_arquivo)
                     with open(caminho_completo, "wb") as f:
                         pickle.dump(dados, f)
-
                     print(f"Encoding salvo com sucesso: {caminho_completo}")
                     encoding_salvo = True
                     break
